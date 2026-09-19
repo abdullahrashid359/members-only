@@ -19,8 +19,10 @@
   },
   "homepage": "https://github.com/abdullahrashid359/members-only#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
+    "express-validator": "^7.3.2",
     "pg": "^8.23.0"
   }
 }
