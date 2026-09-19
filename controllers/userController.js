@@ -32,4 +32,14 @@ async function createUser(req, res, next) {
     }
 }
 
-module.exports = { getSignUp };
+function getLogIn(req, res) {
+    const error = req.session.messages?.[0];
+
+    if (req.session.messages) {
+        delete req.session.messages;
+    }
+
+    res.render("logIn", { error });
+}
+
+module.exports = { getSignUp, createUser, getLogIn };

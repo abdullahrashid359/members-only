@@ -1,6 +1,7 @@
 const { body } = require('express-validator');
 const { Router } = require('express');
 const userController = require('../controllers/userController');
+const passport = require("../config/passport");
 const db = require('../db/queries');
 
 const userRouter = Router();
@@ -52,5 +53,12 @@ const validateUser = [
 
 userRouter.get('/sign-up', userController.getSignUp);
 userRouter.post('/sign-up', validateUser, userController.createUser);
+
+userRouter.get('/log-in', userController.getLogIn);
+userRouter.post('/log-in', passport.authenticate("local", {
+    successRedirect: '/',
+    failureRedirect: '/log-in',
+    failureMessage: true
+}))
 
 module.exports = userRouter;
