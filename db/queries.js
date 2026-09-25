@@ -32,4 +32,10 @@ async function createMessage(title, text, userId) {
     await pool.query("INSERT INTO messages (title, text, user_id) VALUES ($1, $2, $3)", [title, text, userId]);
 }
 
-module.exports = { getUserById, getUserByUsername, createUser, updateMembershipStatus, createMessage };
+async function getAllMessages() {
+    const { rows } = await pool.query("SELECT m.id, m.title, m.text, m.timestamp, u.first_name, u.last_name, u.username FROM messages m JOIN users u ON m.user_id = u.id ORDER BY  m.timestamp DESC");
+
+    return rows;
+}
+
+module.exports = { getUserById, getUserByUsername, createUser, updateMembershipStatus, createMessage, getAllMessages };
