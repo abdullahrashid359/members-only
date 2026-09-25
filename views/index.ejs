@@ -18,7 +18,11 @@
                 <% if (!currentUser.membership_status) { %>
                     <a href="/join-club">Join the Club</a>
                 <% } %>
-
+            
+                <% if (!currentUser.admin_status) { %>
+                    <a href="/become-admin">Become Admin</a>
+                <% } %>
+                
                 <form action="/log-out" method="POST">
                     <button type="submit">Log Out</button>
                 </form>
@@ -55,6 +59,12 @@
                             <%= message.timestamp.toLocaleString() %>
                         </p>
                     </div>
+                <% } %>
+
+                <% if (currentUser?.admin_status) { %>
+                    <form action="/messages/<%= message.id %>/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
                 <% } %>
             </article>
         <% }) %>

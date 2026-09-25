@@ -30,4 +30,16 @@ async function createMessage(req, res, next) {
     }
 }
 
-module.exports = { getNewMessage, createMessage };
+async function deleteMessage(req, res, next) {
+    const { id } = req.params;
+
+    try {
+        await db.deleteMessage(id);
+
+        res.redirect('/');
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports = { getNewMessage, createMessage, deleteMessage };

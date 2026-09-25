@@ -3,7 +3,7 @@ const { Router } = require('express');
 const userController = require('../controllers/userController');
 const passport = require("../config/passport");
 const db = require('../db/queries');
-const isAuthenticated = require('../middleware/authMiddleware');
+const { isAuthenticated, isAdmin } = require("../middleware/authMiddleware");
 
 const userRouter = Router();
 
@@ -66,5 +66,8 @@ userRouter.post('/log-out', userController.logOut);
 
 userRouter.get('/join-club', isAuthenticated, userController.getJoinClub);
 userRouter.post('/join-club', isAuthenticated, userController.joinClub);
+
+userRouter.get('/become-admin', isAuthenticated, userController.getBecomeAdmin);
+userRouter.post('/become-admin', isAuthenticated, userController.becomeAdmin);
 
 module.exports = userRouter;

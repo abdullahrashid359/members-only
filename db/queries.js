@@ -38,4 +38,12 @@ async function getAllMessages() {
     return rows;
 }
 
-module.exports = { getUserById, getUserByUsername, createUser, updateMembershipStatus, createMessage, getAllMessages };
+async function updateAdminStatus(id) {
+    await pool.query("UPDATE users SET admin_status = true WHERE id = $1", [id]);
+}
+
+async function deleteMessage(id) {
+    await pool.query("DELETE FROM messages WHERE id = $1", [id]);
+}
+
+module.exports = { getUserById, getUserByUsername, createUser, updateMembershipStatus, createMessage, getAllMessages, updateAdminStatus, deleteMessage };

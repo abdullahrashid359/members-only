@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 const { Router } = require('express');
 const messageController = require('../controllers/messageController');
-const isAuthenticated = require('../middleware/authMiddleware');
+const { isAuthenticated, isAdmin } = require("../middleware/authMiddleware");
 
 const messageRouter = Router();
 
@@ -21,5 +21,7 @@ const validateMessage = [
 
 messageRouter.get('/messages/new', isAuthenticated, messageController.getNewMessage);
 messageRouter.post('/messages/new', isAuthenticated, validateMessage, messageController.createMessage);
+
+messageRouter.post('/messages/:id/delete', isAdmin, messageController.deleteMessage);
 
 module.exports = messageRouter;

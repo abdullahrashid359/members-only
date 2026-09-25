@@ -69,4 +69,22 @@ async function joinClub(req, res, next) {
     }
 }
 
-module.exports = { getSignUp, createUser, getLogIn, logOut, getJoinClub, joinClub };
+function getBecomeAdmin(req, res) {
+    res.render('becomeAdmin');
+}
+
+async function becomeAdmin(req, res, next) {
+    const { passcode } = req.body;
+
+    if (passcode !== process.env.ADMIN_PASSCODE)
+        return res.render('becomeAdmin', { error: "Passcode is incorrect" });
+
+    try {
+        await db.updateAdminStatus(req.user.id);
+        res.redirect('/');
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = { getSignUp, createUser, getLogIn, logOut, getJoinClub, joinClub, getBecomeAdmin, becomeAdmin };
