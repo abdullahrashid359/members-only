@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Members Only</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
-    <main>
+<body class="form-page">
+    <main class="form-card">
         <h1>Sign Up</h1>
 
         <% if (locals.errors) { %>
-            <ul>
+            <ul class="error-list">
                 <% errors.forEach((error) => { %>
                     <li><%= error.msg %></li>
                 <% }) %>
@@ -74,7 +75,7 @@
             <button type="submit">Sign Up</button>
         </form>
 
-        <p>
+        <p class="form-footer">
             Already have an account?
             <a href="/log-in">Log in</a>
         </p>

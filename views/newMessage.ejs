@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Message | Members Only</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
-    <main>
+<body class="form-page">
+    <main class="form-card">
         <h1>Create Message</h1>
 
         <% if (locals.errors) { %>
-            <ul>
+            <ul class="error-list">
                 <% errors.forEach((error) => { %>
                     <li><%= error.msg %></li>
                 <% }) %>
@@ -41,7 +42,9 @@
             <button type="submit">Create Message</button>
         </form>
 
-        <a href="/">Cancel</a>
+        <p class="form-footer">
+            <a href="/">Cancel</a>
+        </p>
     </main>
 </body>
 </html>
