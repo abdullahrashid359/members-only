@@ -12,6 +12,7 @@ const passport = require("./config/passport");
 
 const indexRouter = require("./routes/indexRouter");
 const userRouter = require("./routes/userRouter");
+const messageRouter = require('./routes/messageRouter');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/", userRouter);
+app.use("/", messageRouter);
 
 const PORT = process.env.PORT || 3000;
 

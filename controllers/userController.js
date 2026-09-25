@@ -39,7 +39,34 @@ function getLogIn(req, res) {
         delete req.session.messages;
     }
 
-    res.render("logIn", { error });
+    res.render('logIn', { error });
 }
 
-module.exports = { getSignUp, createUser, getLogIn };
+function logOut(req, res, next) {
+    req.logout((err) => {
+        if (err)
+            return next(err);
+
+        res.redirect('/');
+    })
+}
+
+function getJoinClub(req, res) {
+    res.render('joinClub');
+}
+
+async function joinClub(req, res, next) {
+    const { passcode } = req.body;
+
+    if (passcode !== process.env.CLUB_PASSCODE)
+        return res.render('joinClub', { error: "Passcode is incorrect" });
+
+    try {
+        await db.updateMembershipStatus(req.user.id);
+        res.redirect('/');
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports = { getSignUp, createUser, getLogIn, logOut, getJoinClub, joinClub };

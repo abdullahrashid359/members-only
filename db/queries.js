@@ -24,4 +24,12 @@ async function createUser(firstName, lastName, username, passwordHash) {
     await pool.query("INSERT INTO users (first_name, last_name, username, password_hash) VALUES ($1, $2, $3, $4)", [firstName, lastName, username, passwordHash]);
 }
 
-module.exports = { getUserById, getUserByUsername, createUser, };
+async function updateMembershipStatus(id) {
+    await pool.query("UPDATE users SET membership_status = true WHERE id = $1", [id]);
+}
+
+async function createMessage(title, text, userId) {
+    await pool.query("INSERT INTO messages (title, text, user_id) VALUES ($1, $2, $3)", [title, text, userId]);
+}
+
+module.exports = { getUserById, getUserByUsername, createUser, updateMembershipStatus, createMessage };
