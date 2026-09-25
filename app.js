@@ -8,11 +8,13 @@ if (process.env.NODE_ENV !== "production") {
 const path = require("node:path");
 const express = require("express");
 const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
+const pool = require("./db/pool");
 const passport = require("./config/passport");
 
 const indexRouter = require("./routes/indexRouter");
 const userRouter = require("./routes/userRouter");
-const messageRouter = require('./routes/messageRouter');
+const messageRouter = require("./routes/messageRouter");
 
 const app = express();
 
@@ -23,9 +25,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
+    store: new pgSession({
+        pool: pool,
+        createTableIfMissing: true,
+    }), 
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        maxAge: 1000*60*60*24*7,
+    }
 }));
 
 app.use(passport.session());
